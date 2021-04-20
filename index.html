@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="bootstrap/bootstrap4-toggle.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
-    <title>COMP4431 Multimedia Computing - Image Processor</title>
+    <title>COMP4431 Multimedia Computing - Image Processor - Extending the Kuwahara filter</title>
 
     <style>
     body { min-width: 1020px; }
@@ -311,7 +311,31 @@
                                     </select>
                                 </div>
                                 <div class="col-4">
-                                    <label for="kuwahara-filter-size">Filter size:</label>
+                                    <label for="kuwahara-subregion">Subregion Type:</label>
+                                    <select class="custom-select" id="kuwahara-subregion">
+                                        <option value="square">Square</option>
+                                        <option value="nagao">Nagao-Matsuyama</option>
+                                        <option value="gaussian">Guassian Circular</option>
+                                    </select>
+                                </div>
+                                <div class="col-5">
+                                    <label for="kuwahara-variance">Variance Type:</label>
+                                    <select class="custom-select" id="kuwahara-variance">
+                                        <option value="grey">Gray Value</option>
+                                        <option value="color">Distance of Color Variance</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="kuwahara-criterion">Criterion Type:</label>
+                                    <select class="custom-select" id="kuwahara-criterion">
+                                        <option value="msdc">Minimum Standard Deviation Criterion</option>
+                                        <option value="vcfs">Value and Criterion Filter Structure</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="kuwahara-filter-size">Filter Size:</label>
                                     <div class="input-group">
                                         <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
                                             <input class="custom-range" id="kuwahara-filter-size" type="range" value="5" min="5" max="13" step="4"
@@ -319,6 +343,42 @@
                                         </div>
                                         <div class="input-group-append">
                                             <span class="input-group-text d-block" style="width: 5.5em"><span>5</span> &times; <span>5</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label for="kuwahara-gaussian-subregion">[Gaussian Circular] Number of Subregions:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="kuwahara-gaussian-subregion" type="range" value="8" min="1" max="12" step="1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text > span').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text d-block" style="width: 5.5em"><span>8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <label for="kuwahara-gaussian-sigma">[Gaussian Circular] Sigma:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="kuwahara-gaussian-sigma" type="range" value="4" min="1" max="10" step="1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text > span').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text d-block" style="width: 5.5em"><span>4</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="kuwahara-vcfs-q">[VCFS] q:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="kuwahara-vcfs-q" type="range" value="3" min="0" max="10" step="1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text > span').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text d-block" style="width: 5.5em"><span>3</span>
                                         </div>
                                     </div>
                                 </div>

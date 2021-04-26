@@ -22,7 +22,7 @@
 <body>
     <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
         <div class="navbar-header">
-            <span class="navbar-brand">Image Processor</span>
+            <span class="navbar-brand">Image Processor - Extending the Kuwahara filter</span>
         </div>
     </nav>
 
@@ -298,43 +298,62 @@
                             </div>
                         </div>
                     </div>
-
+  
                     <!-- Kuwahara filter -->
                     <div class="tab-pane" id="kuwahara">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col">
                                     <label for="kuwahara-input">Input:</label>
                                     <select class="custom-select" id="kuwahara-input">
                                         <option value="original">Original Image</option>
                                         <option value="processed">Processed Image</option>
                                     </select>
                                 </div>
-                                <div class="col-4">
+                                <div class="col">
                                     <label for="kuwahara-subregion">Subregion Type:</label>
-                                    <select class="custom-select" id="kuwahara-subregion">
+                                    <select class="custom-select" id="kuwahara-subregion" onchange="
+                                        if ($(this).val() == 'nagao') {
+                                            document.getElementById('kuwahara-filter-size').disabled = true;
+                                            document.getElementById('kuwahara-filter-size').value = 5;
+                                            $('#kuwahara-filter-size').parents('.input-group').find('.input-group-text > span').html('5');
+                                        } else {
+                                            document.getElementById('kuwahara-filter-size').disabled = false;
+                                        }
+                                        if ($(this).val() == 'gaussian') {
+                                            $('#kuwahara-gaussian-subregion-div').removeClass('d-none');
+                                            $('#kuwahara-gaussian-sigma-div').removeClass('d-none');
+                                        } else {
+                                            $('#kuwahara-gaussian-subregion-div').addClass('d-none');
+                                            $('#kuwahara-gaussian-sigma-div').addClass('d-none');
+                                        }">
                                         <option value="square">Square</option>
                                         <option value="nagao">Nagao-Matsuyama</option>
                                         <option value="gaussian">Guassian Circular</option>
                                     </select>
                                 </div>
-                                <div class="col-5">
+                                <div class="col">
                                     <label for="kuwahara-variance">Variance Type:</label>
                                     <select class="custom-select" id="kuwahara-variance">
                                         <option value="grey">Gray Value</option>
                                         <option value="color">Distance of Color Variance</option>
                                     </select>
                                 </div>
-                                <div class="col-6">
+                                <div class="col">
                                     <label for="kuwahara-criterion">Criterion Type:</label>
-                                    <select class="custom-select" id="kuwahara-criterion">
+                                    <select class="custom-select" id="kuwahara-criterion" onchange="
+                                    if ($(this).val() == 'vcfs') {
+                                            $('#kuwahara-vcfs-q-div').removeClass('d-none');
+                                        } else {
+                                            $('#kuwahara-vcfs-q-div').addClass('d-none');
+                                        }">
                                         <option value="msdc">Minimum Standard Deviation Criterion</option>
                                         <option value="vcfs">Value and Criterion Filter Structure</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-3">
+                            <div class="row align-items-end">
+                                <div class="col">
                                     <label for="kuwahara-filter-size">Filter Size:</label>
                                     <div class="input-group">
                                         <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
@@ -342,11 +361,11 @@
                                              oninput="$(this).parents('.input-group').find('.input-group-text > span').html($(this).val())">
                                         </div>
                                         <div class="input-group-append">
-                                            <span class="input-group-text d-block" style="width: 5.5em"><span>5</span> &times; <span>5</span></span>
+                                            <span class="input-group-text d-block" style="width: 4.3em"><span>5</span> &times; <span>5</span></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div id="kuwahara-gaussian-subregion-div" class="col d-none">
                                     <label for="kuwahara-gaussian-subregion">[Gaussian Circular] Number of Subregions:</label>
                                     <div class="input-group">
                                         <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
@@ -354,23 +373,23 @@
                                              oninput="$(this).parents('.input-group').find('.input-group-text > span').html($(this).val())">
                                         </div>
                                         <div class="input-group-append">
-                                            <span class="input-group-text d-block" style="width: 5.5em"><span>8</span>
+                                            <span class="input-group-text d-block" style="width: 3em"><span>8</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-5">
+                                <div id="kuwahara-gaussian-sigma-div" class="col d-none">
                                     <label for="kuwahara-gaussian-sigma">[Gaussian Circular] Sigma:</label>
                                     <div class="input-group">
                                         <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
-                                            <input class="custom-range" id="kuwahara-gaussian-sigma" type="range" value="4" min="1" max="10" step="1"
+                                            <input class="custom-range" id="kuwahara-gaussian-sigma" type="range" value="3" min="1" max="10" step="1"
                                              oninput="$(this).parents('.input-group').find('.input-group-text > span').html($(this).val())">
                                         </div>
                                         <div class="input-group-append">
-                                            <span class="input-group-text d-block" style="width: 5.5em"><span>4</span>
+                                            <span class="input-group-text d-block" style="width: 3em"><span>3</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div id="kuwahara-vcfs-q-div" class="col d-none">
                                     <label for="kuwahara-vcfs-q">[VCFS] q:</label>
                                     <div class="input-group">
                                         <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
@@ -378,7 +397,7 @@
                                              oninput="$(this).parents('.input-group').find('.input-group-text > span').html($(this).val())">
                                         </div>
                                         <div class="input-group-append">
-                                            <span class="input-group-text d-block" style="width: 5.5em"><span>3</span>
+                                            <span class="input-group-text d-block" style="width: 3em"><span>3</span>
                                         </div>
                                     </div>
                                 </div>
